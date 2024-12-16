@@ -1,18 +1,17 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
-import './globals.css'
-import { AddressBar } from '@/ui/address-bar'
-import Byline from '@/ui/byline'
+import { Inter, Playfair_Display } from 'next/font/google'
 
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-  weight: '100 900',
-})
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-  weight: '100 900',
+import { cn } from '@/lib/utils'
+
+import './globals.css'
+import Providers from '@/components/providers'
+import Header from '@/components/header'
+import Footer from '@/components/footer'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-serif',
 })
 
 export const metadata: Metadata = {
@@ -26,26 +25,19 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-y-scroll bg-gray-1100 bg-[url('/grid.svg')] pb-36`}
+        className={cn(
+          'flex min-h-screen flex-col font-sans antialiased',
+          inter.variable,
+          playfair.variable
+        )}
       >
-        <div className="lg:pl-72">
-          <div className="mx-auto max-w-4xl space-y-8 px-2 pt-20 lg:px-8 lg:py-8">
-            <div className="rounded-lg bg-vc-border-gradient p-px shadow-lg shadow-black/20">
-              <div className="rounded-lg bg-slate-300">
-                <AddressBar />
-              </div>
-            </div>
-
-            <div className="rounded-lg bg-vc-border-gradient p-px shadow-lg shadow-black/20">
-              <div className="rounded-lg bg-slate-300 p-3.5 lg:p-6">
-                {children}
-              </div>
-            </div>
-            <Byline />
-          </div>
-        </div>
+        <Providers>
+          <Header />
+          <main className="grow">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )
