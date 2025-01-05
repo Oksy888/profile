@@ -1,7 +1,5 @@
-import Posts from '@/components/posts'
 import { getPosts } from '@/lib/posts'
 import PostsWithSearch from '@/components/posts-with-search'
-import { Suspense } from 'react'
 
 export default async function PostsPage() {
   const posts = await getPosts()
@@ -10,7 +8,6 @@ export default async function PostsPage() {
     <section className="pb-24 pt-40">
       <div className="container max-w-3xl">
         <h1 className="title mb-12">Posts</h1>
-        {/* <Posts posts={posts} /> */}
         <PostsWithSearch posts={posts} />
       </div>
     </section>

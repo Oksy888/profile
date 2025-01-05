@@ -4,7 +4,7 @@ dotenv.config()
 import { z } from 'zod'
 import { Resend } from 'resend'
 import { ContactFormSchema, NewsletterFormSchema } from '@/lib/schemas'
-import ContactFormEmail from '@/app/emails/contact-form-email'
+import ContactFormEmail from '@/emails/contact-form-email'
 
 type ContactFormInputs = z.infer<typeof ContactFormSchema>
 type NewsletterFormInputs = z.infer<typeof NewsletterFormSchema>
@@ -16,14 +16,13 @@ export async function sendEmail(data: ContactFormInputs) {
   if (result.error) {
     return { error: result.error.format() }
   }
-  console.log('Preparing to send email...')
+
   try {
     const { name, email, message } = result.data
 
     const { data, error } = await resend.emails.send({
       from: 'onboarding@resend.dev',
-      to: ['kolyado4ka@gmail.com'],
-      //to: ['delivered@resend.dev'],
+      to: ['delivered@resend.dev'],
       //cc: ['myemail@gmail.com'],
       subject: 'Contact form submission',
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,

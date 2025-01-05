@@ -1,7 +1,6 @@
 import Intro from '@/components/intro'
 import NewsletterForm from '@/components/news-letter-form'
 import RecentPosts from '@/components/posts-recent'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 
 export default function Home() {
   // const content = `# This is markdown heading`
