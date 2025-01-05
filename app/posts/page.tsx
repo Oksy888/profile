@@ -1,6 +1,7 @@
 import Posts from '@/components/posts'
 import { getPosts } from '@/lib/posts'
 import PostsWithSearch from '@/components/posts-with-search'
+import { Suspense } from 'react'
 
 export default async function PostsPage() {
   const posts = await getPosts()
