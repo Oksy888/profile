@@ -4,7 +4,11 @@ import { useState } from 'react'
 import { MinusIcon, PlusIcon } from '@radix-ui/react-icons'
 import { Button } from './ui/button'
 
-export default function Counter() {
+export default function Counter({
+  initialValue = 0,
+}: {
+  initialValue?: number
+}) {
   const [count, setCount] = useState(0)
   const increment = () => setCount(count + 1)
   const decrement = () => setCount(count - 1)
