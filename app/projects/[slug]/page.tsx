@@ -8,17 +8,17 @@ import { notFound } from 'next/navigation'
 import React from 'react'
 
 export async function generateStaticParams() {
-  const posts = await getProjects()
-  const slugs = posts.map((post) => ({ slug: post.slug }))
-  return slugs
+  const projects = await getProjects()
+  return projects.map((post) => ({ params: { slug: post.slug } }))
 }
 
-export default async function Project({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  const { slug } = await params
+type PageProps = {
+  params: {
+    slug: string
+  }
+}
+export default async function Project({ params }: PageProps) {
+  const { slug } = params
   const post = await getProjectBySlug(slug)
   if (!post) {
     notFound()
