@@ -9,18 +9,19 @@ import React from 'react'
 
 export async function generateStaticParams() {
   const posts = await getPosts()
-  return posts.map((post) => ({ params: { slug: post.slug } }))
+  const slugs = posts.map((post) => ({ slug: post.slug }))
+
+  return slugs
 }
 
-type PageProps = {
-  params: {
-    slug: string
-  }
-}
-
-export default async function Post({ params }: PageProps) {
-  const { slug } = params
+export default async function Post({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
   const post = await getPostBySlug(slug)
+
   if (!post) {
     notFound()
   }

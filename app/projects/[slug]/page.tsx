@@ -9,22 +9,24 @@ import React from 'react'
 
 export async function generateStaticParams() {
   const projects = await getProjects()
-  return projects.map((post) => ({ params: { slug: post.slug } }))
+  const slugs = projects.map((project) => ({ slug: project.slug }))
+
+  return slugs
 }
 
-type PageProps = {
-  params: {
-    slug: string
-  }
-}
-export default async function Project({ params }: PageProps) {
-  const { slug } = params
-  const post = await getProjectBySlug(slug)
-  if (!post) {
+export default async function Project({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const project = await getProjectBySlug(slug)
+
+  if (!project) {
     notFound()
   }
 
-  const { metadata, content } = post
+  const { metadata, content } = project
 
   const { title, image, author, publishedAt } = metadata
 
